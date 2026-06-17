@@ -1,15 +1,15 @@
 import SwiftUI
 
 struct ContentView: View {
-  @State private var store = AlarmStore()
+  @State private var viewModel = AlarmDashboardViewModel()
 
   var body: some View {
     NavigationStack {
       ScrollView {
         VStack(spacing: 20) {
           heroCard
-          TimerPanelView(store: store)
-          AlarmComposerView(store: store)
+          TimerPanelView(viewModel: viewModel)
+          AlarmComposerView(viewModel: viewModel)
           alarmsSection
         }
         .padding(20)
@@ -20,11 +20,11 @@ struct ContentView: View {
       .navigationTitle("Lakshya")
     }
     .fullScreenCover(item: activeAlertBinding) { alert in
-      ActiveAlertView(alert: alert, store: store)
+      ActiveAlertView(alert: alert, viewModel: viewModel)
         .interactiveDismissDisabled()
     }
-    .sensoryFeedback(.warning, trigger: store.alertTriggerCount)
-    .sensoryFeedback(.success, trigger: store.completedAlertCount)
+    .sensoryFeedback(.warning, trigger: viewModel.alertTriggerCount)
+    .sensoryFeedback(.success, trigger: viewModel.completedAlertCount)
   }
 
   private var heroCard: some View {
@@ -32,14 +32,15 @@ struct ContentView: View {
       Text("Wake up with a mission")
         .font(.title.bold())
         .foregroundStyle(.white)
+        .accessibilityIdentifier(AccessibilityID.heroTitle)
 
       Text("Timers and alarms stop only after a short checklist or math prompt, so you don’t swipe them away half-awake.")
         .font(.subheadline)
         .foregroundStyle(.white.opacity(0.82))
 
       HStack(spacing: 12) {
-        Label(store.now.formatted(date: .omitted, time: .shortened), systemImage: "clock")
-        Label("\(store.alarms.filter(\.isEnabled).count) active alarms", systemImage: "alarm")
+        Label(viewModel.now.formatted(date: .omitted, time: .shortened), systemImage: "clock")
+        Label("\(viewModel.enabledAlarmCount) active alarms", systemImage: "alarm")
       }
       .font(.footnote.weight(.semibold))
       .foregroundStyle(.white.opacity(0.88))
@@ -62,8 +63,9 @@ struct ContentView: View {
     VStack(alignment: .leading, spacing: 16) {
       Text("Alarm Board")
         .font(.title3.weight(.semibold))
+        .accessibilityIdentifier(AccessibilityID.alarmBoard)
 
-      if store.alarms.isEmpty {
+      if viewModel.alarms.isEmpty {
         Text("Add your first alarm to start building a stop ritual.")
           .font(.subheadline)
           .foregroundStyle(.secondary)
@@ -75,9 +77,9 @@ struct ContentView: View {
           )
       } else {
         VStack(spacing: 12) {
-          ForEach(Array(store.alarms.enumerated()), id: \.element.id) { offset, alarm in
-            AlarmRowView(alarm: alarm, store: store) {
-              store.deleteAlarms(at: IndexSet(integer: offset))
+          ForEach(viewModel.alarms) { alarm in
+            AlarmRowView(alarm: alarm, viewModel: viewModel) {
+              viewModel.deleteAlarm(alarm.id)
             }
           }
         }
@@ -88,9 +90,9 @@ struct ContentView: View {
 
   private var activeAlertBinding: Binding<ActiveAlert?> {
     Binding(
-      get: { store.activeAlert },
+      get: { viewModel.activeAlert },
       set: { newValue in
-        store.activeAlert = newValue
+        viewModel.activeAlert = newValue
       }
     )
   }

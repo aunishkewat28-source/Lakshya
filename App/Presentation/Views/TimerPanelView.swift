@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TimerPanelView: View {
-  @Bindable var store: AlarmStore
+  @Bindable var viewModel: AlarmDashboardViewModel
 
   private let presets = [5, 15, 25, 45]
 
@@ -13,8 +13,8 @@ struct TimerPanelView: View {
 
         Spacer()
 
-        if store.hasActiveTimer {
-          Text(store.formattedRemainingTime())
+        if viewModel.hasActiveTimer {
+          Text(viewModel.formattedRemainingTime())
             .font(.footnote.monospacedDigit().weight(.semibold))
             .foregroundStyle(.secondary)
         }
@@ -23,16 +23,16 @@ struct TimerPanelView: View {
       HStack(spacing: 10) {
         ForEach(presets, id: \.self) { preset in
           Button {
-            store.updateTimerPreset(preset)
+            viewModel.updateTimerPreset(preset)
           } label: {
             Text("\(preset)m")
               .font(.subheadline.weight(.semibold))
-              .foregroundStyle(store.timerPresetMinutes == preset ? Color.white : Color.primary)
+              .foregroundStyle(viewModel.timerConfiguration.presetMinutes == preset ? Color.white : Color.primary)
               .frame(maxWidth: .infinity)
               .padding(.vertical, 12)
               .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                  .fill(store.timerPresetMinutes == preset ? Color.accentColor : Color.white.opacity(0.72))
+                  .fill(viewModel.timerConfiguration.presetMinutes == preset ? Color.accentColor : Color.white.opacity(0.72))
               )
           }
           .buttonStyle(.plain)
@@ -40,8 +40,8 @@ struct TimerPanelView: View {
       }
 
       Picker("Stop Mode", selection: Binding(
-        get: { store.timerChallenge },
-        set: { store.updateTimerChallenge($0) }
+        get: { viewModel.timerConfiguration.challenge },
+        set: { viewModel.updateTimerChallenge($0) }
       )) {
         ForEach(StopChallenge.allCases) { challenge in
           Text(challenge.title).tag(challenge)
@@ -51,15 +51,16 @@ struct TimerPanelView: View {
       .buttonStyle(.bordered)
 
       HStack(spacing: 12) {
-        Button(store.hasActiveTimer ? "Restart Timer" : "Start Timer", systemImage: "play.fill") {
-          store.startTimer()
+        Button(viewModel.hasActiveTimer ? "Restart Timer" : "Start Timer", systemImage: "play.fill") {
+          viewModel.startTimer()
         }
         .buttonStyle(.borderedProminent)
         .tint(Color.accentColor)
+        .accessibilityIdentifier(AccessibilityID.timerStartButton)
 
-        if store.hasActiveTimer {
+        if viewModel.hasActiveTimer {
           Button("Cancel", systemImage: "xmark") {
-            store.cancelTimer()
+            viewModel.cancelTimer()
           }
           .buttonStyle(.bordered)
         }
@@ -71,5 +72,6 @@ struct TimerPanelView: View {
       RoundedRectangle(cornerRadius: 24, style: .continuous)
         .fill(.white.opacity(0.78))
     )
+    .accessibilityIdentifier(AccessibilityID.focusTimerCard)
   }
 }

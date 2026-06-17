@@ -1,6 +1,6 @@
 import Foundation
 
-struct AlarmItem: Identifiable, Codable, Equatable {
+struct Alarm: Identifiable, Codable, Equatable {
   var id: UUID
   var title: String
   var hour: Int

@@ -92,10 +92,35 @@ struct ActiveAlert: Identifiable, Equatable {
       Int(enteredAnswer) == mathPrompt?.answer
     }
   }
+
+  mutating func toggleTask(_ id: UUID) {
+    guard let index = tasks.firstIndex(where: { $0.id == id }) else {
+      return
+    }
+
+    tasks[index].isDone.toggle()
+  }
+
+  mutating func updateAnswer(_ value: String) {
+    enteredAnswer = value.filter(\.isNumber)
+  }
 }
 
 struct CountdownTimer: Codable, Equatable {
   var durationMinutes: Int
   var challenge: StopChallenge
   var endDate: Date
+}
+
+struct TimerConfiguration: Codable, Equatable {
+  var presetMinutes: Int
+  var challenge: StopChallenge
+
+  static let `default` = TimerConfiguration(presetMinutes: 15, challenge: .checklist)
+}
+
+struct AlarmSnapshot: Equatable {
+  var alarms: [Alarm]
+  var activeTimer: CountdownTimer?
+  var timerConfiguration: TimerConfiguration
 }

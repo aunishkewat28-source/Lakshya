@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct AlarmRowView: View {
-  var alarm: AlarmItem
-  @Bindable var store: AlarmStore
+  var alarm: Alarm
+  @Bindable var viewModel: AlarmDashboardViewModel
   var onDelete: () -> Void
 
   var body: some View {
     HStack(spacing: 16) {
       VStack(alignment: .leading, spacing: 6) {
-        Text(store.formattedTime(for: alarm))
+        Text(viewModel.formattedTime(for: alarm))
           .font(.title2.monospacedDigit().weight(.bold))
 
         Text(alarm.title)
@@ -25,7 +25,7 @@ struct AlarmRowView: View {
         alarm.isEnabled ? "On" : "Off",
         isOn: Binding(
           get: { alarm.isEnabled },
-          set: { store.setAlarmEnabled(alarm.id, isEnabled: $0) }
+          set: { viewModel.setAlarmEnabled(alarm.id, isEnabled: $0) }
         )
       )
       .labelsHidden()

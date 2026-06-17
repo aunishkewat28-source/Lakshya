@@ -47,6 +47,43 @@
         }
       ],
       "type": "application"
+    },
+    "LakshyaTests": {
+      "platform": "iOS",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "app.bitrig.new.b145bb62-2e41-4b13-b0f9-1aef109f9aa8.tests",
+        "SWIFT_VERSION": "5.0"
+      },
+      "sources": [
+        {
+          "path": "UnitTests"
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "Lakshya"
+        }
+      ],
+      "type": "bundle.unit-test"
+    },
+    "LakshyaUITests": {
+      "platform": "iOS",
+      "settings": {
+        "PRODUCT_BUNDLE_IDENTIFIER": "app.bitrig.new.b145bb62-2e41-4b13-b0f9-1aef109f9aa8.uitests",
+        "SWIFT_VERSION": "5.0",
+        "TEST_TARGET_NAME": "Lakshya"
+      },
+      "sources": [
+        {
+          "path": "UITests"
+        }
+      ],
+      "dependencies": [
+        {
+          "target": "Lakshya"
+        }
+      ],
+      "type": "bundle.ui-testing"
     }
   }
 }
