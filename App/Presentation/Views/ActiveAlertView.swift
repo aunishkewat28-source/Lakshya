@@ -2,11 +2,11 @@ import SwiftUI
 
 struct ActiveAlertView: View {
   var alert: ActiveAlert
-  @Bindable var store: AlarmStore
+  @Bindable var viewModel: AlarmDashboardViewModel
   @FocusState private var answerIsFocused: Bool
 
   private var currentAlert: ActiveAlert {
-    store.activeAlert ?? alert
+    viewModel.activeAlert ?? alert
   }
 
   var body: some View {
@@ -36,13 +36,14 @@ struct ActiveAlertView: View {
         challengeCard
 
         Button("Stop Alert", systemImage: "checkmark.circle.fill") {
-          store.finishActiveAlert()
+          viewModel.finishActiveAlert()
         }
         .buttonStyle(.borderedProminent)
         .controlSize(.large)
         .disabled(!currentAlert.isResolved)
         .tint(.white)
         .foregroundStyle(Color(red: 0.68, green: 0.18, blue: 0.10))
+        .accessibilityIdentifier(AccessibilityID.stopAlertButton)
 
         Spacer()
       }
@@ -64,7 +65,7 @@ struct ActiveAlertView: View {
 
         ForEach(currentAlert.tasks) { task in
           Button {
-            store.toggleTask(task.id)
+            viewModel.toggleTask(task.id)
           } label: {
             HStack(spacing: 12) {
               Image(systemName: task.isDone ? "checkmark.circle.fill" : "circle")
@@ -101,7 +102,7 @@ struct ActiveAlertView: View {
 
         TextField("Answer", text: Binding(
           get: { currentAlert.enteredAnswer },
-          set: { store.updateAnswer($0) }
+          set: { viewModel.updateAnswer($0) }
         ))
         .keyboardType(.numberPad)
         .textFieldStyle(.roundedBorder)

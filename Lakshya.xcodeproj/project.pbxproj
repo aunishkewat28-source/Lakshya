@@ -7,54 +7,168 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0685304977823D70389929E5 /* AlarmComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDAAC17966E3B0C5A9DF123 /* AlarmComposerView.swift */; };
-		08596202D995E479667864F3 /* StopChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9306E1FCA5D9F3AB3FF609 /* StopChallenge.swift */; };
-		629DF0E24981EC925583F8B1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 338812694B96D2775EA70B9A /* ContentView.swift */; };
-		66F27D1E4CF982DD3DDBA0EB /* AlarmItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC1ABEE42E839C7E189F3FD /* AlarmItem.swift */; };
-		6E95B7007F8D8B9BAF5CC44E /* AlarmRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07CB6AD922DC627008EF00B /* AlarmRowView.swift */; };
-		8B8B7FA32E455C0B91E08AE1 /* TimerPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2EECADC5D4B706ADD67BD0 /* TimerPanelView.swift */; };
-		A543E0913C9B02D97DACC07D /* RiseRitualApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F02F6A3F271EA62DAE1404 /* RiseRitualApp.swift */; };
+		2AB49729E84389601E5DF311 /* AlarmComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2AC9D3C8674EE14BE7152C9 /* AlarmComposerView.swift */; };
+		3700A28E0E2C0152042731D4 /* MathPromptGenerating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB84767BB2CA1AD7DE1FA08 /* MathPromptGenerating.swift */; };
+		5282F8AC50DD75533CEFE3CA /* AlarmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54852164A2A43E4165F57D3B /* AlarmRepository.swift */; };
+		5D0AA0D647542F4BA88931BE /* AlertModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6830BAE54AB7DAEF88805E97 /* AlertModels.swift */; };
+		62DA0EBD39337E134FF86BF4 /* LakshyaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC741B578FB3C790A69492F /* LakshyaUITests.swift */; };
+		662A853AA66617A43BD4E281 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65729DBEA1EBF49C4B80FD2E /* ContentView.swift */; };
+		73407876F0710ADBDF8237F3 /* LakshyaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0724233CCDD29705F6579F10 /* LakshyaApp.swift */; };
+		7B61CECDB7B9C1AAC03FAE29 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33B4AC87230A00C331244D8 /* Alarm.swift */; };
+		7F003040CD8EFFD4761FF276 /* TimerDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E3485A97B6E544D6CFFEF8 /* TimerDriver.swift */; };
+		8097680AA74B19C55FF48403 /* DateProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC224C80858B95E5845CEAF /* DateProviding.swift */; };
+		9D43B6BB3E170431E91FA095 /* AlarmDashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAC351390DE50DDA6E3AFBE /* AlarmDashboardViewModel.swift */; };
+		AF3F9C7E76869D23AADB36ED /* ActiveAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE9E5292AAA9C7B6E1B9C00 /* ActiveAlertView.swift */; };
+		E1B76753A982959D5EC68F36 /* AlarmDashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9A6230D2EE1FACF51DFEC2 /* AlarmDashboardViewModelTests.swift */; };
+		E9C1ED00294B509B88FD428C /* AlarmRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5110C8D8F50303F5081B990 /* AlarmRowView.swift */; };
 		F3B247AFF33AE57AC9C46EC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A2FE63DE0CAE1B7B148BF82 /* Assets.xcassets */; };
-		FA1A5C6568DAEAA283B647B2 /* AlarmStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0137CD5881F4DE05C1725AA0 /* AlarmStore.swift */; };
-		FE78E6B953BEC889344C4F3D /* ActiveAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA10C8881DB32C4E3B414EE /* ActiveAlertView.swift */; };
+		FA2E7573A2291154D7578A7E /* UserDefaultsAlarmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827D0382CDF3F83A5CF1F935 /* UserDefaultsAlarmRepository.swift */; };
+		FB68F8E20D640418D4693642 /* AccessibilityID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE00C8ACD8E1FEA47B8AE7C /* AccessibilityID.swift */; };
+		FCD0DA8247C6CBC94B499ED6 /* TimerPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D714650252E7F22D4A48A /* TimerPanelView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5D01FD0E8713E6548D1569F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 31FA59ECC61043B88BA46537 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32DFECC0A88597E6F7B9234A;
+			remoteInfo = Lakshya;
+		};
+		BE7FC97438B991A6A3486F08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 31FA59ECC61043B88BA46537 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32DFECC0A88597E6F7B9234A;
+			remoteInfo = Lakshya;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		0137CD5881F4DE05C1725AA0 /* AlarmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmStore.swift; sourceTree = "<group>"; };
-		0FA10C8881DB32C4E3B414EE /* ActiveAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveAlertView.swift; sourceTree = "<group>"; };
-		19F02F6A3F271EA62DAE1404 /* RiseRitualApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiseRitualApp.swift; sourceTree = "<group>"; };
-		1A2EECADC5D4B706ADD67BD0 /* TimerPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPanelView.swift; sourceTree = "<group>"; };
+		01E3485A97B6E544D6CFFEF8 /* TimerDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerDriver.swift; sourceTree = "<group>"; };
+		0724233CCDD29705F6579F10 /* LakshyaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LakshyaApp.swift; sourceTree = "<group>"; };
 		2A2FE63DE0CAE1B7B148BF82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		338812694B96D2775EA70B9A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		6DC1ABEE42E839C7E189F3FD /* AlarmItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmItem.swift; sourceTree = "<group>"; };
-		6E9306E1FCA5D9F3AB3FF609 /* StopChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopChallenge.swift; sourceTree = "<group>"; };
+		2DC741B578FB3C790A69492F /* LakshyaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LakshyaUITests.swift; sourceTree = "<group>"; };
+		3FE00C8ACD8E1FEA47B8AE7C /* AccessibilityID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityID.swift; sourceTree = "<group>"; };
+		455D714650252E7F22D4A48A /* TimerPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPanelView.swift; sourceTree = "<group>"; };
+		4CC224C80858B95E5845CEAF /* DateProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProviding.swift; sourceTree = "<group>"; };
+		54852164A2A43E4165F57D3B /* AlarmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepository.swift; sourceTree = "<group>"; };
+		65729DBEA1EBF49C4B80FD2E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6830BAE54AB7DAEF88805E97 /* AlertModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModels.swift; sourceTree = "<group>"; };
+		77F86CDC2A6DEBC0B124228B /* LakshyaUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LakshyaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BB84767BB2CA1AD7DE1FA08 /* MathPromptGenerating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathPromptGenerating.swift; sourceTree = "<group>"; };
+		7F29C6DA0D29DBD671DFD00F /* LakshyaTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LakshyaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F9A6230D2EE1FACF51DFEC2 /* AlarmDashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDashboardViewModelTests.swift; sourceTree = "<group>"; };
+		827D0382CDF3F83A5CF1F935 /* UserDefaultsAlarmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsAlarmRepository.swift; sourceTree = "<group>"; };
+		8FE9E5292AAA9C7B6E1B9C00 /* ActiveAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveAlertView.swift; sourceTree = "<group>"; };
 		9F8A3EBEF9B35F9D965B93D7 /* Lakshya.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Lakshya.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C07CB6AD922DC627008EF00B /* AlarmRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRowView.swift; sourceTree = "<group>"; };
-		DDDAAC17966E3B0C5A9DF123 /* AlarmComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmComposerView.swift; sourceTree = "<group>"; };
+		A2AC9D3C8674EE14BE7152C9 /* AlarmComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmComposerView.swift; sourceTree = "<group>"; };
+		BDAC351390DE50DDA6E3AFBE /* AlarmDashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDashboardViewModel.swift; sourceTree = "<group>"; };
+		C5110C8D8F50303F5081B990 /* AlarmRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRowView.swift; sourceTree = "<group>"; };
+		F33B4AC87230A00C331244D8 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		07CF3BF402AC7B6B041D5161 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4CC224C80858B95E5845CEAF /* DateProviding.swift */,
+				7BB84767BB2CA1AD7DE1FA08 /* MathPromptGenerating.swift */,
+				01E3485A97B6E544D6CFFEF8 /* TimerDriver.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0EFAE5031500D3A2AE97784A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8FE9E5292AAA9C7B6E1B9C00 /* ActiveAlertView.swift */,
+				A2AC9D3C8674EE14BE7152C9 /* AlarmComposerView.swift */,
+				C5110C8D8F50303F5081B990 /* AlarmRowView.swift */,
+				65729DBEA1EBF49C4B80FD2E /* ContentView.swift */,
+				455D714650252E7F22D4A48A /* TimerPanelView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		121ADAADD47EA552E4B413A2 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				2DC741B578FB3C790A69492F /* LakshyaUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		2BC99CFF24D62D09EAA88805 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BDAC351390DE50DDA6E3AFBE /* AlarmDashboardViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4C9EBF430EEAD1D0CF634C29 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				F33B4AC87230A00C331244D8 /* Alarm.swift */,
+				6830BAE54AB7DAEF88805E97 /* AlertModels.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		64AE0352DBABF922E27A0E0A /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				3FE00C8ACD8E1FEA47B8AE7C /* AccessibilityID.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		77710916BB51F7AB09FCACCB /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				4C9EBF430EEAD1D0CF634C29 /* Entities */,
+				F574A0DE15904D3032561217 /* Repositories */,
+				07CF3BF402AC7B6B041D5161 /* Services */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		8E7200E4D81834C648AA4438 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				7F9A6230D2EE1FACF51DFEC2 /* AlarmDashboardViewModelTests.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
 		C34632F42AC078D4D9BCB928 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				0FA10C8881DB32C4E3B414EE /* ActiveAlertView.swift */,
-				DDDAAC17966E3B0C5A9DF123 /* AlarmComposerView.swift */,
-				6DC1ABEE42E839C7E189F3FD /* AlarmItem.swift */,
-				C07CB6AD922DC627008EF00B /* AlarmRowView.swift */,
-				0137CD5881F4DE05C1725AA0 /* AlarmStore.swift */,
 				2A2FE63DE0CAE1B7B148BF82 /* Assets.xcassets */,
-				338812694B96D2775EA70B9A /* ContentView.swift */,
-				19F02F6A3F271EA62DAE1404 /* RiseRitualApp.swift */,
-				6E9306E1FCA5D9F3AB3FF609 /* StopChallenge.swift */,
-				1A2EECADC5D4B706ADD67BD0 /* TimerPanelView.swift */,
+				0724233CCDD29705F6579F10 /* LakshyaApp.swift */,
+				64AE0352DBABF922E27A0E0A /* Core */,
+				D39D087B0AC3D5138C25864A /* Data */,
+				77710916BB51F7AB09FCACCB /* Domain */,
+				DE2B915FE6A0D3BCD63582E6 /* Presentation */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		D39D087B0AC3D5138C25864A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				827D0382CDF3F83A5CF1F935 /* UserDefaultsAlarmRepository.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		D49FA3B57C240CA254C622B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				9F8A3EBEF9B35F9D965B93D7 /* Lakshya.app */,
+				7F29C6DA0D29DBD671DFD00F /* LakshyaTests.xctest */,
+				77F86CDC2A6DEBC0B124228B /* LakshyaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,13 +177,50 @@
 			isa = PBXGroup;
 			children = (
 				C34632F42AC078D4D9BCB928 /* App */,
+				121ADAADD47EA552E4B413A2 /* UITests */,
+				8E7200E4D81834C648AA4438 /* UnitTests */,
 				D49FA3B57C240CA254C622B6 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		DE2B915FE6A0D3BCD63582E6 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				2BC99CFF24D62D09EAA88805 /* ViewModels */,
+				0EFAE5031500D3A2AE97784A /* Views */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		F574A0DE15904D3032561217 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				54852164A2A43E4165F57D3B /* AlarmRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		143E33F99256BDEDD24E0BCB /* LakshyaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA412FE2B9411DA14CFCBE1A /* Build configuration list for PBXNativeTarget "LakshyaTests" */;
+			buildPhases = (
+				9081A54C4A478F27ADCEDEC2 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33CA5771C7BD3D9322348B5C /* PBXTargetDependency */,
+			);
+			name = LakshyaTests;
+			packageProductDependencies = (
+			);
+			productName = LakshyaTests;
+			productReference = 7F29C6DA0D29DBD671DFD00F /* LakshyaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		32DFECC0A88597E6F7B9234A /* Lakshya */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 384C897AA49B8F77F6A9198B /* Build configuration list for PBXNativeTarget "Lakshya" */;
@@ -88,6 +239,24 @@
 			productReference = 9F8A3EBEF9B35F9D965B93D7 /* Lakshya.app */;
 			productType = "com.apple.product-type.application";
 		};
+		59135A94E139D5ACE2E60C3F /* LakshyaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C1879ACC49CF65BC001D9E0 /* Build configuration list for PBXNativeTarget "LakshyaUITests" */;
+			buildPhases = (
+				9A9B3B24D30746C4EEF4AAC5 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				175342229012A3947050D602 /* PBXTargetDependency */,
+			);
+			name = LakshyaUITests;
+			packageProductDependencies = (
+			);
+			productName = LakshyaUITests;
+			productReference = 77F86CDC2A6DEBC0B124228B /* LakshyaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -97,6 +266,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					59135A94E139D5ACE2E60C3F = {
+						TestTargetID = 32DFECC0A88597E6F7B9234A;
+					};
 				};
 			};
 			buildConfigurationList = 5D4E9758C25BC80E6D2F0CFA /* Build configuration list for PBXProject "Lakshya" */;
@@ -114,6 +286,8 @@
 			projectRoot = "";
 			targets = (
 				32DFECC0A88597E6F7B9234A /* Lakshya */,
+				143E33F99256BDEDD24E0BCB /* LakshyaTests */,
+				59135A94E139D5ACE2E60C3F /* LakshyaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -134,19 +308,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE78E6B953BEC889344C4F3D /* ActiveAlertView.swift in Sources */,
-				0685304977823D70389929E5 /* AlarmComposerView.swift in Sources */,
-				66F27D1E4CF982DD3DDBA0EB /* AlarmItem.swift in Sources */,
-				6E95B7007F8D8B9BAF5CC44E /* AlarmRowView.swift in Sources */,
-				FA1A5C6568DAEAA283B647B2 /* AlarmStore.swift in Sources */,
-				629DF0E24981EC925583F8B1 /* ContentView.swift in Sources */,
-				A543E0913C9B02D97DACC07D /* RiseRitualApp.swift in Sources */,
-				08596202D995E479667864F3 /* StopChallenge.swift in Sources */,
-				8B8B7FA32E455C0B91E08AE1 /* TimerPanelView.swift in Sources */,
+				FB68F8E20D640418D4693642 /* AccessibilityID.swift in Sources */,
+				AF3F9C7E76869D23AADB36ED /* ActiveAlertView.swift in Sources */,
+				7B61CECDB7B9C1AAC03FAE29 /* Alarm.swift in Sources */,
+				2AB49729E84389601E5DF311 /* AlarmComposerView.swift in Sources */,
+				9D43B6BB3E170431E91FA095 /* AlarmDashboardViewModel.swift in Sources */,
+				5282F8AC50DD75533CEFE3CA /* AlarmRepository.swift in Sources */,
+				E9C1ED00294B509B88FD428C /* AlarmRowView.swift in Sources */,
+				5D0AA0D647542F4BA88931BE /* AlertModels.swift in Sources */,
+				662A853AA66617A43BD4E281 /* ContentView.swift in Sources */,
+				8097680AA74B19C55FF48403 /* DateProviding.swift in Sources */,
+				73407876F0710ADBDF8237F3 /* LakshyaApp.swift in Sources */,
+				3700A28E0E2C0152042731D4 /* MathPromptGenerating.swift in Sources */,
+				7F003040CD8EFFD4761FF276 /* TimerDriver.swift in Sources */,
+				FCD0DA8247C6CBC94B499ED6 /* TimerPanelView.swift in Sources */,
+				FA2E7573A2291154D7578A7E /* UserDefaultsAlarmRepository.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9081A54C4A478F27ADCEDEC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B76753A982959D5EC68F36 /* AlarmDashboardViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A9B3B24D30746C4EEF4AAC5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62DA0EBD39337E134FF86BF4 /* LakshyaUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		175342229012A3947050D602 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 32DFECC0A88597E6F7B9234A /* Lakshya */;
+			targetProxy = 5D01FD0E8713E6548D1569F2 /* PBXContainerItemProxy */;
+		};
+		33CA5771C7BD3D9322348B5C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 32DFECC0A88597E6F7B9234A /* Lakshya */;
+			targetProxy = BE7FC97438B991A6A3486F08 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		193305F23309EC6C44401E82 /* Release */ = {
@@ -226,6 +435,74 @@
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
+		};
+		328831EDE23CAF53361A1067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "app.bitrig.new.b145bb62-2e41-4b13-b0f9-1aef109f9aa8.tests";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lakshya.app/Lakshya";
+			};
+			name = Release;
+		};
+		52516153D65B9D7F3A41A6E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "app.bitrig.new.b145bb62-2e41-4b13-b0f9-1aef109f9aa8.uitests";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Lakshya;
+			};
+			name = Debug;
+		};
+		5641307059B6CE047CE9E0ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "app.bitrig.new.b145bb62-2e41-4b13-b0f9-1aef109f9aa8.tests";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Lakshya.app/Lakshya";
+			};
+			name = Debug;
+		};
+		58DA3D6BED23AC985DD3ADCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "app.bitrig.new.b145bb62-2e41-4b13-b0f9-1aef109f9aa8.uitests";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Lakshya;
+			};
+			name = Release;
 		};
 		642D3FFBCF9760E07B26DCE5 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -315,6 +592,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0C1879ACC49CF65BC001D9E0 /* Build configuration list for PBXNativeTarget "LakshyaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52516153D65B9D7F3A41A6E4 /* Debug */,
+				58DA3D6BED23AC985DD3ADCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		384C897AA49B8F77F6A9198B /* Build configuration list for PBXNativeTarget "Lakshya" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -329,6 +615,15 @@
 			buildConfigurations = (
 				D50A2E9C6851797B05E4B073 /* Debug */,
 				193305F23309EC6C44401E82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BA412FE2B9411DA14CFCBE1A /* Build configuration list for PBXNativeTarget "LakshyaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5641307059B6CE047CE9E0ED /* Debug */,
+				328831EDE23CAF53361A1067 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

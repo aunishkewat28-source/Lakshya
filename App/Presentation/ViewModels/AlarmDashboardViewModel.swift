@@ -3,35 +3,64 @@ import Observation
 
 @MainActor
 @Observable
-final class AlarmStore {
-  private enum StorageKey {
-    static let alarms = "rise-ritual.alarms"
-    static let activeTimer = "rise-ritual.activeTimer"
-    static let timerPresetMinutes = "rise-ritual.timerPresetMinutes"
-    static let timerChallenge = "rise-ritual.timerChallenge"
-  }
-
-  private let calendar = Calendar.current
-  private let defaults = UserDefaults.standard
-  private var ticker: Timer?
+final class AlarmDashboardViewModel {
+  private let repository: AlarmRepository
+  private let dateProvider: DateProviding
+  private let mathPromptGenerator: MathPromptGenerating
+  private let calendar: Calendar
+  private var timerDriver: TimerDriver?
   private var lastTriggeredMinuteByAlarmID: [UUID: String] = [:]
 
-  var alarms: [AlarmItem] = []
-  var now = Date.now
-  var timerPresetMinutes = 15
-  var timerChallenge: StopChallenge = .checklist
+  var alarms: [Alarm]
+  var now: Date
+  var timerConfiguration: TimerConfiguration
   var activeTimer: CountdownTimer?
   var activeAlert: ActiveAlert?
   var draftAlarmTitle = ""
-  var draftAlarmTime = AlarmStore.defaultDraftAlarmTime()
+  var draftAlarmTime: Date
   var draftAlarmChallenge: StopChallenge = .checklist
   var alertTriggerCount = 0
   var completedAlertCount = 0
 
-  init() {
-    load()
-    startTicker()
-    tick()
+  init(
+    repository: AlarmRepository = UserDefaultsAlarmRepository(),
+    dateProvider: DateProviding = SystemDateProvider(),
+    mathPromptGenerator: MathPromptGenerating = RandomMathPromptGenerator(),
+    calendar: Calendar = .autoupdatingCurrent,
+    startsTimerDriver: Bool = true
+  ) {
+    self.repository = repository
+    self.dateProvider = dateProvider
+    self.mathPromptGenerator = mathPromptGenerator
+    self.calendar = calendar
+
+    let snapshot = repository.loadSnapshot()
+    let seededAlarms = snapshot.alarms.isEmpty ? Self.defaultAlarms() : snapshot.alarms
+    alarms = seededAlarms.sorted(by: Self.sortPredicate(_:_:))
+    now = dateProvider.now
+    timerConfiguration = snapshot.timerConfiguration
+    activeTimer = snapshot.activeTimer
+    draftAlarmTime = Self.defaultDraftAlarmTime(calendar: calendar)
+
+    if snapshot.alarms.isEmpty {
+      repository.saveAlarms(alarms)
+    }
+
+    if startsTimerDriver {
+      timerDriver = TimerDriver { [weak self] in
+        self?.refresh()
+      }
+    }
+
+    refresh(now: now)
+  }
+
+  var enabledAlarmCount: Int {
+    alarms.filter(\.isEnabled).count
+  }
+
+  var hasActiveTimer: Bool {
+    activeTimer != nil
   }
 
   var timerRemaining: TimeInterval? {
@@ -42,30 +71,32 @@ final class AlarmStore {
     return max(0, activeTimer.endDate.timeIntervalSince(now))
   }
 
-  var hasActiveTimer: Bool {
-    activeTimer != nil
+  func refresh(now newNow: Date? = nil) {
+    now = newNow ?? dateProvider.now
+    triggerTimerIfNeeded()
+    triggerAlarmIfNeeded()
   }
 
   func startTimer() {
-    let minutes = max(1, timerPresetMinutes)
+    let minutes = max(1, timerConfiguration.presetMinutes)
     activeTimer = CountdownTimer(
       durationMinutes: minutes,
-      challenge: timerChallenge,
+      challenge: timerConfiguration.challenge,
       endDate: now.addingTimeInterval(Double(minutes) * 60)
     )
-    saveTimer()
+    repository.saveActiveTimer(activeTimer)
   }
 
   func cancelTimer() {
     activeTimer = nil
-    saveTimer()
+    repository.saveActiveTimer(nil)
   }
 
   func addAlarm() {
     let components = calendar.dateComponents([.hour, .minute], from: draftAlarmTime)
     let trimmedTitle = draftAlarmTitle.trimmingCharacters(in: .whitespacesAndNewlines)
     let title = trimmedTitle.isEmpty ? "Focus Alarm" : trimmedTitle
-    let alarm = AlarmItem(
+    let alarm = Alarm(
       title: title,
       hour: components.hour ?? 7,
       minute: components.minute ?? 0,
@@ -73,18 +104,16 @@ final class AlarmStore {
     )
 
     alarms.append(alarm)
-    alarms.sort(by: sortPredicate(_:_:))
-    persistAlarms()
+    alarms.sort(by: Self.sortPredicate(_:_:))
+    repository.saveAlarms(alarms)
     draftAlarmTitle = ""
     draftAlarmTime = nextSuggestedAlarmTime(from: draftAlarmTime)
     draftAlarmChallenge = .checklist
   }
 
-  func deleteAlarms(at offsets: IndexSet) {
-    for offset in offsets.sorted(by: >) {
-      alarms.remove(at: offset)
-    }
-    persistAlarms()
+  func deleteAlarm(_ id: UUID) {
+    alarms.removeAll(where: { $0.id == id })
+    repository.saveAlarms(alarms)
   }
 
   func setAlarmEnabled(_ id: UUID, isEnabled: Bool) {
@@ -93,17 +122,17 @@ final class AlarmStore {
     }
 
     alarms[index].isEnabled = isEnabled
-    persistAlarms()
+    repository.saveAlarms(alarms)
   }
 
   func updateTimerPreset(_ minutes: Int) {
-    timerPresetMinutes = minutes
-    defaults.set(minutes, forKey: StorageKey.timerPresetMinutes)
+    timerConfiguration.presetMinutes = minutes
+    repository.saveTimerConfiguration(timerConfiguration)
   }
 
   func updateTimerChallenge(_ challenge: StopChallenge) {
-    timerChallenge = challenge
-    defaults.set(challenge.rawValue, forKey: StorageKey.timerChallenge)
+    timerConfiguration.challenge = challenge
+    repository.saveTimerConfiguration(timerConfiguration)
   }
 
   func updateDraftChallenge(_ challenge: StopChallenge) {
@@ -115,11 +144,7 @@ final class AlarmStore {
       return
     }
 
-    guard let index = activeAlert.tasks.firstIndex(where: { $0.id == id }) else {
-      return
-    }
-
-    activeAlert.tasks[index].isDone.toggle()
+    activeAlert.toggleTask(id)
     self.activeAlert = activeAlert
   }
 
@@ -128,7 +153,7 @@ final class AlarmStore {
       return
     }
 
-    activeAlert.enteredAnswer = value.filter(\.isNumber)
+    activeAlert.updateAnswer(value)
     self.activeAlert = activeAlert
   }
 
@@ -141,11 +166,11 @@ final class AlarmStore {
     self.activeAlert = nil
   }
 
-  func formattedTime(for alarm: AlarmItem) -> String {
+  func formattedTime(for alarm: Alarm) -> String {
     var components = DateComponents()
     components.hour = alarm.hour
     components.minute = alarm.minute
-    let date = calendar.date(from: components) ?? Date.now
+    let date = calendar.date(from: components) ?? now
     return date.formatted(date: .omitted, time: .shortened)
   }
 
@@ -160,65 +185,6 @@ final class AlarmStore {
     return String(format: "%02d:%02d left", minutes, seconds)
   }
 
-  private func load() {
-    if let data = defaults.data(forKey: StorageKey.alarms),
-       let decoded = try? JSONDecoder().decode([AlarmItem].self, from: data) {
-      alarms = decoded.sorted(by: sortPredicate(_:_:))
-    } else {
-      alarms = [
-        AlarmItem(title: "Morning Reset", hour: 7, minute: 0, challenge: .checklist),
-        AlarmItem(title: "Deep Work Start", hour: 9, minute: 30, challenge: .math)
-      ]
-    }
-
-    let preset = defaults.integer(forKey: StorageKey.timerPresetMinutes)
-    if preset > 0 {
-      timerPresetMinutes = preset
-    }
-
-    if let rawValue = defaults.string(forKey: StorageKey.timerChallenge),
-       let challenge = StopChallenge(rawValue: rawValue) {
-      timerChallenge = challenge
-    }
-
-    if let timerData = defaults.data(forKey: StorageKey.activeTimer),
-       let decodedTimer = try? JSONDecoder().decode(CountdownTimer.self, from: timerData) {
-      activeTimer = decodedTimer
-    }
-  }
-
-  private func persistAlarms() {
-    if let data = try? JSONEncoder().encode(alarms) {
-      defaults.set(data, forKey: StorageKey.alarms)
-    }
-  }
-
-  private func saveTimer() {
-    guard let activeTimer else {
-      defaults.removeObject(forKey: StorageKey.activeTimer)
-      return
-    }
-
-    if let data = try? JSONEncoder().encode(activeTimer) {
-      defaults.set(data, forKey: StorageKey.activeTimer)
-    }
-  }
-
-  private func startTicker() {
-    ticker = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-      Task { @MainActor in
-        self?.tick()
-      }
-    }
-    ticker?.tolerance = 0.2
-  }
-
-  private func tick() {
-    now = Date.now
-    triggerTimerIfNeeded()
-    triggerAlarmIfNeeded()
-  }
-
   private func triggerTimerIfNeeded() {
     guard let activeTimer else {
       return
@@ -229,7 +195,7 @@ final class AlarmStore {
     }
 
     self.activeTimer = nil
-    saveTimer()
+    repository.saveActiveTimer(nil)
 
     guard activeAlert == nil else {
       return
@@ -287,7 +253,7 @@ final class AlarmStore {
         title: title,
         detail: detail,
         challenge: challenge,
-        tasks: makeChecklistTasks(),
+        tasks: Self.checklistTasks(),
         mathPrompt: nil,
         enteredAnswer: ""
       )
@@ -298,24 +264,10 @@ final class AlarmStore {
         detail: detail,
         challenge: challenge,
         tasks: [],
-        mathPrompt: makeMathPrompt(),
+        mathPrompt: mathPromptGenerator.makePrompt(),
         enteredAnswer: ""
       )
     }
-  }
-
-  private func makeChecklistTasks() -> [StopTask] {
-    [
-      StopTask(title: "Sit up and put your feet on the floor"),
-      StopTask(title: "Take three steady breaths"),
-      StopTask(title: "Name the first thing you need to do today")
-    ]
-  }
-
-  private func makeMathPrompt() -> MathPrompt {
-    let left = Int.random(in: 7...19)
-    let right = Int.random(in: 3...14)
-    return MathPrompt(left: left, right: right)
   }
 
   private func minuteStamp(for date: Date) -> String {
@@ -328,21 +280,35 @@ final class AlarmStore {
     return "\(year)-\(month)-\(day)-\(hour)-\(minute)"
   }
 
-  private func sortPredicate(_ lhs: AlarmItem, _ rhs: AlarmItem) -> Bool {
+  private func nextSuggestedAlarmTime(from date: Date) -> Date {
+    calendar.date(byAdding: .hour, value: 1, to: date) ?? date
+  }
+
+  private static func defaultDraftAlarmTime(calendar: Calendar) -> Date {
+    let rounded = calendar.date(bySetting: .minute, value: 0, of: .now) ?? .now
+    return calendar.date(byAdding: .hour, value: 1, to: rounded) ?? .now
+  }
+
+  private static func defaultAlarms() -> [Alarm] {
+    [
+      Alarm(title: "Morning Reset", hour: 7, minute: 0, challenge: .checklist),
+      Alarm(title: "Deep Work Start", hour: 9, minute: 30, challenge: .math)
+    ]
+  }
+
+  private static func checklistTasks() -> [StopTask] {
+    [
+      StopTask(title: "Sit up and put your feet on the floor"),
+      StopTask(title: "Take three steady breaths"),
+      StopTask(title: "Name the first thing you need to do today")
+    ]
+  }
+
+  private static func sortPredicate(_ lhs: Alarm, _ rhs: Alarm) -> Bool {
     if lhs.hour == rhs.hour {
       return lhs.minute < rhs.minute
     }
 
     return lhs.hour < rhs.hour
-  }
-
-  private static func defaultDraftAlarmTime() -> Date {
-    let calendar = Calendar.current
-    let rounded = calendar.date(bySetting: .minute, value: 0, of: .now) ?? .now
-    return calendar.date(byAdding: .hour, value: 1, to: rounded) ?? .now
-  }
-
-  private func nextSuggestedAlarmTime(from date: Date) -> Date {
-    calendar.date(byAdding: .hour, value: 1, to: date) ?? date
   }
 }

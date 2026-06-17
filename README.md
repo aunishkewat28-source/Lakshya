@@ -27,11 +27,11 @@ Lakshya is an iPhone alarm and timer app built around a simple idea: alerts shou
 
 ## Main Files
 
-- `App/RiseRitualApp.swift`
-- `App/ContentView.swift`
-- `App/AlarmStore.swift`
-- `App/ActiveAlertView.swift`
-- `App/TimerPanelView.swift`
+- `App/LakshyaApp.swift`
+- `App/Presentation/Views/ContentView.swift`
+- `App/Presentation/ViewModels/AlarmDashboardViewModel.swift`
+- `App/Presentation/Views/ActiveAlertView.swift`
+- `App/Data/UserDefaultsAlarmRepository.swift`
 
 ## Running the App
 
